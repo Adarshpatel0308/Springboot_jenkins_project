@@ -16,13 +16,13 @@ pipeline {
     stages {
         stage('Checkout Code'){
             steps {
-                git url : 'https://github.com/Adarshpatel0308/Springboot_jenkins_project.git', branch: 'main'
+                git url: 'https://github.com/Adarshpatel0308/Springboot_jenkins_project.git', branch: 'main'
             }
         }
 
         stage('Build Maven Project'){
             steps {
-                sh 'RUN mvn install -Dmaven.test.skip=true'
+                sh 'mvn install -Dmaven.test.skip=true'
             }
         }
 
@@ -45,6 +45,7 @@ pipeline {
         }
     }
 }
+
 
 
 

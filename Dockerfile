@@ -1,4 +1,4 @@
-FROM maven:3.9.4-eclipse-temurin-17
+#FROM maven:3.9.4-eclipse-temurin-17
 
 # WORKDIR /app
 
@@ -9,7 +9,7 @@ FROM maven:3.9.4-eclipse-temurin-17
 # EXPOSE 8082
 
 # ENTRYPOINT ["java", "-jar", "app.jar"]
-#FROM openjdk:17-jdk-slim
+FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
@@ -18,6 +18,7 @@ COPY target/*.jar app.jar
 EXPOSE 8082
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
 
 
 

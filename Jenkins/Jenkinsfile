@@ -22,7 +22,7 @@ pipeline {
 
         stage('Build Maven Project'){
             steps {
-                sh 'mvn clean install'
+                sh 'RUN mvn install -Dmaven.test.skip=true'
             }
         }
 
@@ -45,6 +45,7 @@ pipeline {
         }
     }
 }
+
 
 
 

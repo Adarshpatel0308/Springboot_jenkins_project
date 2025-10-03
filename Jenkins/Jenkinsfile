@@ -1,5 +1,12 @@
 pipeline {
-    agent any
+    
+    agent {
+            docker {
+                image 'maven:3.9.4-eclipse-temurin-17'
+                args '-v /root/.m2:/root/.m2'
+            }
+        }
+
 
     environment {
         COMPOSE_PROJECT_NAME = "springboot_ci_project"
@@ -20,19 +27,19 @@ pipeline {
 
         stage('Stop Previous Container'){
             steps {
-                sh 'sudo docker compose down'
+                sh 'docker compose down'
             }
         }
 
         stage('Build Docker Image'){
             steps {
-                sh 'sudo docker build -t myspringapp:latest'
+                sh 'docker build -t myspringapp:latest'
             }
         }
 
         stage('Run Application'){
             steps {
-                sh 'sudo docker compose up -d'
+                sh 'docker compose up -d'
             }
         }
     }
@@ -40,7 +47,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up containers....'
-            sh 'sudo docker compose down'
+            sh 'docker compose down'
         }
 
         success {
@@ -48,5 +55,6 @@ pipeline {
         }
     }
 }
+
 
 

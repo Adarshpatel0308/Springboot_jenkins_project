@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    environment {
+        COMPOSE_PROJECT_NAME = "springboot_ci_project"
+    }
+
+    stages {
+        stage('Checkout Code'){
+            steps {
+                git url : 'https://github.com/Adarshpatel0308/Jenkins_plus_github_maven_project.git'
+            }
+        }
+
+        stage('Build Maven Project'){
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Stop Previous Container'){
+            steps {
+                sh 'sudo docker compose down'
+            }
+        }
+
+        stage('Build Docker Image'){
+            steps {
+                sh 'sudo docker build -t myspringapp:latest'
+            }
+        }
+
+        stage('Run Application'){
+            steps {
+                sh 'sudo docker compose up -d'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up containers....'
+            sh 'sudo docker compose down'
+        }
+
+        success {
+            echo 'Your maven project is ready to GO....'
+        }
+    }
+}
